@@ -20,6 +20,11 @@ class Home extends Component {
                         Modules
           </Link>
                 </Card>
+                <Card cardtitle='Tasks' linktitle='Task List' pathname='/tasks'>
+                    <Link to={{ pathname: '/tasks' }} className="waves-effect waves-light btn" >
+                        Modules
+          </Link>
+                </Card>
             </div>
         );
 

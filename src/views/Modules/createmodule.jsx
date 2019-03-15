@@ -48,9 +48,9 @@ class Createmodule extends Component {
             this.state.goals.length > 0 &&
             this.state.activities.length > 0 &&
             this.state.pills.length > 0) {
-            await axios.post('http://localhost:8002/api/modules', {
+            await axios.post('http://localhost:8000/api/assetmanagement/modules', {
                 id: this.state.id,
-                description: this.state.description,
+                shortDescription: this.state.description,
                 title: this.state.title,
                 modules: this.state.module,
                 sections: this.state.sections,
@@ -154,7 +154,7 @@ class Createmodule extends Component {
         array.push(<div>
             <div className="input-field col s6">
                 <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
-                <label className="active" htmlFor="type"></label>
+                <label className="active" htmlFor="type">type</label>
             </div>
             <div className="input-field col s6">
                 <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
@@ -255,9 +255,11 @@ class Createmodule extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="number" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <input placeholder="title" id="title" type="text" className="validate" onChange={this.handletitlechange} required />
                             <label className="active" htmlFor="title">Title</label>
@@ -266,6 +268,8 @@ class Createmodule extends Component {
                             <input placeholder="description" id="description" type="text" className="validate" onChange={this.handledecriptionchange} required />
                             <label className="active" htmlFor="description">Description</label>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active" >Sections</label>
                             {
@@ -288,7 +292,7 @@ class Createmodule extends Component {
                             <label className="active" htmlFor="value">value</label>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                         </div>
-                        <div>
+                        <div className="input-field col s6">
                             {
                                 this.state.addsections.map((input, id) => {
 
@@ -300,11 +304,13 @@ class Createmodule extends Component {
                                 })
                             }
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active">Modules</label>
                             <input placeholder="modules" id="modules" type="text" className="validate" onChange={this.handlemodulechange} required />
                             <label className="active" htmlFor="modules"></label>
-                            <div>
+                            <div className="input-field col s6">
                                 {
                                     this.state.addmodule.map((input, id) => {
 
@@ -318,11 +324,13 @@ class Createmodule extends Component {
                             </div>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addmodule} > <i className="material-icons" >add</i></button>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active">Tasks</label>
                             <input placeholder="tasks" id="tasks" type="text" className="validate" onChange={this.handletaskchange} required />
                             <label className="active" htmlFor="tasks"></label>
-                            <div>
+                            <div className="input-field col s6">
                                 {
                                     this.state.addtasks.map((input, id) => {
 
@@ -354,6 +362,8 @@ class Createmodule extends Component {
                             </div>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addpills} > <i className="material-icons" >add</i></button>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active">Goals</label>
                             <input placeholder="goals" id="goals" type="text" className="validate" onChange={this.handlegoalschange} required />

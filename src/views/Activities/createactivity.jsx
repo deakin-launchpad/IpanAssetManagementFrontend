@@ -27,10 +27,10 @@ class Createactivity extends Component {
     createactivity = async () => {
         console.log('[AXIOS REQUEST]')
 
-        if (this.state.id !== "" && this.state.description !== "" && this.state.title !== "" && this.state.sections.length > 0) {
-            await axios.post('http://localhost:8002/api/activity', {
+        if (this.state.description !== "" && this.state.title !== "" && this.state.sections.length > 0) {
+            await axios.post('http://localhost:8000/api/assetmanagement/activity', {
                 id: this.state.id,
-                description: this.state.description,
+                shortDescription: this.state.description,
                 title: this.state.title,
                 sections: this.state.sections
             })
@@ -120,7 +120,7 @@ class Createactivity extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="number" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
                         <div className="input-field col s6">

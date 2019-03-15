@@ -24,13 +24,17 @@ class Programdetails extends Component {
                     <form className="col s12">
                         <div className="row">
                             <div className="input-field col s6">
-                                <input placeholder="Id" id="id" type="number" className="validate" disabled defaultValue={this.props.location.params.id}></input>
+                                <input placeholder="Id" id="id" type="id" className="validate" disabled defaultValue={this.props.location.params.id}></input>
                                 <label className="active" htmlFor="id">ID</label>
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="input-field col s6">
                                 <input placeholder="title" id="title" type="text" className="validate" disabled defaultValue={this.props.location.params.title}></input>
                                 <label className="active" htmlFor="title">Title</label>
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="input-field col s6">
                                 <input placeholder="description" id="description" type="text" className="validate" disabled defaultValue={this.props.location.params.description}></input>
                                 <label className="active" htmlFor="description">Description</label>
@@ -54,6 +58,8 @@ class Programdetails extends Component {
                                     })
                                 }
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="input-field col s6">
                                 <label className="active">Modules</label>
                                 {

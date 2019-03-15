@@ -6,26 +6,26 @@ class Programs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lisofprograms: [],
+            listofprograms: [],
             stateflag: false
         };
     }
 
     getPrograms = async () => {
-        await axios.get('http://localhost:8002/api/programs')
+        await axios.get('http://localhost:8000/api/assetmanagment/programs')
             .then((response) => {
                 let data = [];
-                response.data.forEach(element => {
+                response.data.data.programs.forEach(element => {
                     data.push(element);
                 });
                 this.setState({
-                    lisofprograms: data
+                    listofprograms: data
                 });
-
             })
             .catch(error => {
                 console.log(error);
             })
+
     }
     componentDidMount() {
         this.getPrograms();
@@ -33,15 +33,14 @@ class Programs extends Component {
 
 
     render() {
-        console.log('Program', this.state.lisofprograms)
-        if ((typeof this.state.listofprograms) !== "undefined") {
+        if ((this.state.listofprograms).length > 0) {
             return (
                 <div className="container">
                     <Link to={{ pathname: '/createprogram' }} className="btn-floating btn-large waves-effect waves-light red" >
                         <i className="material-icons">add</i>
                     </Link>
                     {
-                        this.state.lisofprograms.map((value, i) => {
+                        this.state.listofprograms.map((value, i) => {
                             return <div key={i}><div>
                                 {
                                     <Card index={i} program={value} cardtitle="Program" linktitle="Program Details" pathname="/programdetails">{i}</Card>

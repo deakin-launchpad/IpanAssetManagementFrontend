@@ -33,7 +33,7 @@ class Moduledetails extends Component {
                                 <label className="active" htmlFor="title">Title</label>
                             </div>
                             <div className="input-field col s6">
-                                <input placeholder="description" id="description" type="text" className="validate" disabled defaultValue={this.props.location.params.description}></input>
+                                <input placeholder="description" id="description" type="text" className="validate" disabled defaultValue={this.props.location.params.shortDescription}></input>
                                 <label className="active" htmlFor="description">Description</label>
                             </div>
                             <div className="input-field col s6">
@@ -55,7 +55,7 @@ class Moduledetails extends Component {
                                     })
                                 }
                             </div>
-                            <div className="input-field col s6">
+                            {/* <div className="input-field col s6">
                                 <label className="active">Modules</label>
                                 {
                                     this.props.location.params.modules.map((item, key) => {
@@ -70,7 +70,7 @@ class Moduledetails extends Component {
 
                                     })
                                 }
-                            </div>
+                            </div> */}
                             <div className="input-field col s6">
                                 <label className="active">Tasks</label>
                                 {
@@ -135,7 +135,7 @@ class Moduledetails extends Component {
                                     })
                                 }
                             </div>
-                            <div className="input-field col s6">
+                            {/* <div className="input-field col s6">
                                 <label className="active" >Resources</label>
                                 <div className="input-field col s6">
                                     <input placeholder="type" id="type" type="text" className="validate" disabled defaultValue={this.props.location.params.resources.title}></input>
@@ -145,7 +145,7 @@ class Moduledetails extends Component {
                                     <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={this.props.location.params.resources.shortDescription}></input>
                                     <label className="active" htmlFor="value">short description</label>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </form>
                 </div>

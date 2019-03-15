@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import M from 'materialize-css'
-class Sidenav extends Component {
+class Header extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loginstatus: false
+        }
+    }
 
     componentDidMount() {
         document.addEventListener('DOMContentLoaded', function () {
@@ -9,8 +15,11 @@ class Sidenav extends Component {
         });
     }
     render() {
+        console.log('Login', window.localStorage.getItem('loginStatus'))
         return (
-            <div>
+            <header className="App-header">
+                Header Component
+                    <a className="waves-effect" href="/home"><i className="material-icons left">home</i></a>
                 <ul id="slide-out" className="sidenav">
                     <li>
                         <div className="user-view">
@@ -18,22 +27,21 @@ class Sidenav extends Component {
                                 <img src="images/office.jpg" alt="background" />
                             </div>
                             <a href="#!">Image</a>
-                            <a href="#!"><span className="white-text name">John Doe</span></a>
-                            <a href="#!"><span className="white-text email">jdandturk@gmail.com</span></a>
+                            <a href="#!"><span className="black-text name">John Doe</span></a>
+                            <a href="#!"><span className="black-text email">jdandturk@gmail.com</span></a>
                         </div>
                     </li>
                     <li><a href="/programs">Programs List</a></li>
                     <li><a href="/modules">Modules List</a></li>
                     <li><a href="/activity">Activity List</a></li>
-                    <li><div className="divider"></div></li>
-                    <li><a href="#!" className="subheader">Subheader</a></li>
-                    <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
+                    <li><a href="/tasks">Tasks List</a></li>
                 </ul>
-                <a href="#!" data-target="slide-out" className="sidenav-trigger left"><i className="material-icons ">menu</i></a>
-            </div>
+                <a href="#!" data-target="slide-out" className="sidenav-trigger "><i className="material-icons left">menu</i></a>
+            </header>
 
         )
     }
+
 }
 
-export default Sidenav;
+export default Header;

@@ -3,7 +3,7 @@ import './App.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'material-icons/iconfont/material-icons.css';
 import Home from './views/home'
-import Sidenav from '../src/views/sidenav'
+import Header from '../src/views/header'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Programs from './views/Program/programs';
@@ -15,30 +15,34 @@ import CreateModule from './views/Modules/createmodule'
 import Activities from './views/Activities/activities'
 import Activitydetails from './views/Activities/activitydetails'
 import Createactivity from './views/Activities/createactivity'
-
+import Tasks from './views/Tasks/tasks'
+import Taskdeatils from './views/Tasks/taskdetails'
+import Login from './views/login'
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
+      loginStatus: true,
     }
-
-
   }
 
-
+  loginStatus = (status) => {
+    return status ? this.setState({
+      loginStatus: status
+    }) : false
+  }
 
   render() {
     return (
       <div className="App">
-        <header className='App-header'>
-          <Sidenav></Sidenav>
-        </header>
+        {console.log('[PATH]', window.location.pathname)}
+        {this.state.loginStatus ? <Header></Header> : null}
         <main>
           <Router>
             <Switch>
-              <Route exact path="/" component={Home} />
+              {/* <Route path="/" component={() => <Login loginStatus={this.loginStatus} ></Login>} /> */}
+              <Route path="/home" component={Home} />
               <Route path="/programs" component={Programs} />
               <Route path="/programdetails" component={Programdetails} />
               <Route path="/createprogram" component={Createprogram} />
@@ -48,10 +52,12 @@ class App extends Component {
               <Route path="/activity" component={Activities} />
               <Route path="/activitydetails" component={Activitydetails} />
               <Route path="/createactivity" component={Createactivity} />
+              <Route path="/tasks" component={Tasks} />
+              <Route path="/taskdetails" component={Taskdeatils} />
             </Switch>
           </Router>
         </main>
-        <footer className="App-footer"><div className="container">Footer Component</div></footer>
+        <footer className="App-footer">Footer Component</footer>
       </div>
     );
   }

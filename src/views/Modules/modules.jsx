@@ -13,10 +13,10 @@ class Modules extends Component {
     }
 
     getModules = async () => {
-        await axios.get('http://localhost:8002/api/modules')
+        await axios.get('http://localhost:8000/api/assetmanagment/modules')
             .then((response) => {
                 let data = [];
-                response.data.forEach(element => {
+                response.data.data.modules.forEach(element => {
                     data.push(element);
                 });
                 this.setState({
@@ -34,8 +34,7 @@ class Modules extends Component {
 
 
     render() {
-        console.log('Modules', this.state.listofmodules)
-        if ((typeof this.state.listofmodules) !== "undefined") {
+        if ((this.state.listofmodules).length > 0) {
             return (
                 <div className="container">
                     <Link to={{ pathname: '/createmodule' }} className="btn-floating btn-large waves-effect waves-light red" >
@@ -56,7 +55,7 @@ class Modules extends Component {
         else {
             return (
                 <div className="container">
-                    <Link to={{ pathname: '/creamodule' }} className="btn-floating btn-large waves-effect waves-light red" >
+                    <Link to={{ pathname: '/createmodule' }} className="btn-floating btn-large waves-effect waves-light red" >
                         <i className="material-icons">add</i>
                     </Link>
                 </div>

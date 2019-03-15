@@ -28,8 +28,8 @@ class Createprogram extends Component {
     createprogram = async () => {
         console.log('[AXIOS REQUEST]')
 
-        if (this.state.id !== "" && this.state.description !== "" && this.state.title !== "" && this.state.module.length > 0 && this.state.sections.length > 0) {
-            await axios.post('http://localhost:8002/api/program', {
+        if (this.state.description !== "" && this.state.title !== "" && this.state.module.length > 0 && this.state.sections.length > 0) {
+            await axios.post('http://localhost:8000/api/assetmanagement/programs', {
                 id: this.state.id,
                 description: this.state.description,
                 title: this.state.title,
@@ -143,9 +143,11 @@ class Createprogram extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="number" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <input placeholder="title" id="title" type="text" className="validate" onChange={this.handletitlechange} required />
                             <label className="active" htmlFor="title">Title</label>
@@ -154,6 +156,8 @@ class Createprogram extends Component {
                             <input placeholder="description" id="description" type="text" className="validate" onChange={this.handledecriptionchange} required />
                             <label className="active" htmlFor="description">Description</label>
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active" >Sections</label>
                             {
@@ -167,6 +171,8 @@ class Createprogram extends Component {
                                 )
                             }
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
                             <label className="active" htmlFor="type">type</label>
@@ -176,7 +182,9 @@ class Createprogram extends Component {
                             <label className="active" htmlFor="value">value</label>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                         </div>
-                        <div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s6">
                             {
                                 this.state.addsections.map((input, id) => {
 
@@ -188,6 +196,8 @@ class Createprogram extends Component {
                                 })
                             }
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <label className="active">Modules</label>
                             <input placeholder="modules" id="modules" type="text" className="validate" onChange={this.handlemodulechange} required />
@@ -206,11 +216,11 @@ class Createprogram extends Component {
                             </div>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addmodules} > <i className="material-icons" >add</i></button>
                         </div>
-
+                    </div>
+                    <div className="row">
                         <a href="#!" className="btn waves-effect waves-light" name="action" onClick={this.handlesubmit}>Submit
                             <i className="material-icons right">send</i>
                         </a>
-
                     </div>
                 </form>
             </div >

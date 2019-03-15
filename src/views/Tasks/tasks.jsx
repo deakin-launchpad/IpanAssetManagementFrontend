@@ -2,53 +2,50 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 import Card from '../../card/card'
-
-class Activities extends Component {
+class Tasks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listofactivities: [],
+            listoftasks: [],
             stateflag: false
         };
     }
 
-    getActivities = () => {
-        axios.get('http://localhost:8000/api/assetmanagment/activity')
+    gettasks = async () => {
+        await axios.get('http://localhost:8000/api/assetmanagment/tasks')
             .then((response) => {
                 let data = [];
-                console.log('[ACTicity]', response)
-                response.data.data.activity.forEach(element => {
+                console.log('[Response]', response)
+                response.data.data.tasks.forEach(element => {
                     data.push(element);
                 });
                 this.setState({
-                    listofactivities: data
+                    listoftasks: data
                 });
-                console.log('[ACTIVITY] :' + JSON.stringify(this.state.listofactivities));
+
             })
             .catch(error => {
                 console.log(error);
             })
     }
     componentDidMount() {
-        this.loading = true;
-        this.getActivities();
-        this.loading = false;
+        this.gettasks();
     }
 
 
     render() {
-        console.log('Activities', this.state.listofactivities)
-        if ((this.state.listofactivities).length > 0) {
+        console.log('Tasks', this.state.listoftasks)
+        if ((this.state.listoftasks).length > 0) {
             return (
                 <div className="container">
-                    <Link to={{ pathname: '/createactivity' }} className="btn-floating btn-large waves-effect waves-light red" >
+                    <Link to={{ pathname: '/createtasks' }} className="btn-floating btn-large waves-effect waves-light red" >
                         <i className="material-icons">add</i>
                     </Link>
                     {
-                        this.state.listofactivities.map((value, i) => {
+                        this.state.listoftasks.map((value, i) => {
                             return <div key={i}><div>
                                 {
-                                    <Card index={i} program={value} cardtitle="Activities" linktitle="Activity Details" pathname="/activitydetails">{i}</Card>
+                                    <Card index={i} program={value} cardtitle="Tasks" linktitle="Task Details" pathname="/taskdetails">{i}</Card>
                                 }
                             </div></div>
                         })
@@ -59,7 +56,7 @@ class Activities extends Component {
         else {
             return (
                 <div className="container">
-                    <Link to={{ pathname: '/createactivity' }} className="btn-floating btn-large waves-effect waves-light red" >
+                    <Link to={{ pathname: '/createtasks' }} className="btn-floating btn-large waves-effect waves-light red" >
                         <i className="material-icons">add</i>
                     </Link>
                 </div>
@@ -68,4 +65,4 @@ class Activities extends Component {
     }
 }
 
-export default Activities;
+export default Tasks;
