@@ -9,6 +9,7 @@ class Login extends Component {
             password: '',
             loginstatus: false
         }
+        this.props.loginStatus(this.state.loginstatus)
     }
     handleEmail = (e) => {
         this.setState({
@@ -50,12 +51,8 @@ class Login extends Component {
         }
 
     }
-    componentDidUpdate() {
-        return <Redirect to={{ pathname: '/home' }} />
-    }
     render() {
         if (this.state.loginstatus === true) {
-            this.props.loginStatus(this.state.loginstatus)
             return <Redirect to={{ pathname: '/home' }} />
 
         }

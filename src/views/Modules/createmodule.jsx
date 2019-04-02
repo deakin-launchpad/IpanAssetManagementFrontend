@@ -8,7 +8,7 @@ class Createmodule extends Component {
         super(props)
 
         this.state = {
-            addmodule: [],
+            addrefreshers: [],
             addsections: [],
             addtasks: [],
             addgoals: [],
@@ -19,7 +19,7 @@ class Createmodule extends Component {
             title: '',
             sectiontype: '',
             sectionvalue: '',
-            module: [],
+            refreshers: [],
             sections: [{
                 type: '',
                 value: ''
@@ -42,7 +42,7 @@ class Createmodule extends Component {
 
         if (this.state.description !== "" &&
             this.state.title !== "" &&
-            this.state.module.length > 0 &&
+            this.state.refreshers.length > 0 &&
             this.state.sections.length > 0 &&
             this.state.tasks.length > 0 &&
             this.state.goals.length > 0 &&
@@ -52,7 +52,7 @@ class Createmodule extends Component {
                 id: this.state.id,
                 shortDescription: this.state.description,
                 title: this.state.title,
-                modules: this.state.module,
+                refreshers: this.state.refreshers,
                 sections: this.state.sections,
                 tasks: this.state.tasks,
                 activities: this.state.activities,
@@ -79,17 +79,17 @@ class Createmodule extends Component {
         }
 
     }
-    addmodule = (e) => {
+    addrefreshers = (e) => {
         e.preventDefault()
-        var modulearray = this.state.addmodule;
+        var refreshersarray = this.state.addrefreshers;
 
-        modulearray.push(<div>
-            <input placeholder="modules" id="modules" type="text" className="validate" onChange={this.handlemodulechange} required />
+        refreshersarray.push(<div>
+            <input placeholder="modules" id="modules" type="text" className="validate" onChange={this.handlerefresherschange} required />
             <label className="active" htmlFor="modules"></label>
         </div>);
-        console.log('[ARRAY] :', modulearray)
+        console.log('[ARRAY] :', refreshersarray)
         this.setState({
-            addmodule: modulearray
+            addrefreshers: refreshersarray
         })
     }
 
@@ -112,7 +112,7 @@ class Createmodule extends Component {
         var goalsarray = this.state.addgoals;
 
         goalsarray.push(<div>
-            <input placeholder="goals" id="goals" type="text" className="validate" onChange={this.handletaskchange} required />
+            <input placeholder="goals" id="goals" type="text" className="validate" onChange={this.handlegoalschange} required />
             <label className="active" htmlFor="goals"></label>
         </div>);
         console.log('[ARRAY] :', goalsarray)
@@ -186,12 +186,12 @@ class Createmodule extends Component {
             description: e.target.value
         })
     }
-    handlemodulechange = (e) => {
-        var array = this.state.module;
+    handlerefresherschange = (e) => {
+        var array = this.state.refreshers;
 
         array.push(e.target.value)
         this.setState({
-            module: array
+            refreshers: array
         })
     }
     handlesectiontypechange = (e) => {
@@ -255,7 +255,7 @@ class Createmodule extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
                     </div>
@@ -307,12 +307,12 @@ class Createmodule extends Component {
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
-                            <label className="active">Modules</label>
-                            <input placeholder="modules" id="modules" type="text" className="validate" onChange={this.handlemodulechange} required />
+                            <label className="active">Refreshers</label>
+                            <input placeholder="refreshers" id="modules" type="text" className="validate" onChange={this.handlerefresherschange} required />
                             <label className="active" htmlFor="modules"></label>
                             <div className="input-field col s6">
                                 {
-                                    this.state.addmodule.map((input, id) => {
+                                    this.state.addrefreshers.map((input, id) => {
 
                                         return (
                                             <div key={id}>
@@ -322,7 +322,7 @@ class Createmodule extends Component {
                                     })
                                 }
                             </div>
-                            <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addmodule} > <i className="material-icons" >add</i></button>
+                            <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addrefreshers} > <i className="material-icons" >add</i></button>
                         </div>
                     </div>
                     <div className="row">

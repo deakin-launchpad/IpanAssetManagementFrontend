@@ -36,7 +36,7 @@ main {
   font-size: calc(10px + 2vmin);
   color: white;
   width: 100vw;
-  position: absolute;
+  position: relative;
 }
 .App-link {
   color: #61dafb;

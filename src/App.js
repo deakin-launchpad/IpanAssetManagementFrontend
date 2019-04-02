@@ -17,6 +17,7 @@ import Activitydetails from './views/Activities/activitydetails'
 import Createactivity from './views/Activities/createactivity'
 import Tasks from './views/Tasks/tasks'
 import Taskdeatils from './views/Tasks/taskdetails'
+import CreateTasks from './views/Tasks/createtasks'
 import Login from './views/login'
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class App extends Component {
               <Route path="/createactivity" component={Createactivity} />
               <Route path="/tasks" component={Tasks} />
               <Route path="/taskdetails" component={Taskdeatils} />
+              <Route path="/createtasks" component={CreateTasks} />
             </Switch>
           </Router>
         </main>

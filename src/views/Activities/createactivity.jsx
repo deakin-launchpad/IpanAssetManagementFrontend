@@ -17,7 +17,7 @@ class Createactivity extends Component {
 
             sections: [{
                 type: '',
-                value: ''
+                data: { value: '' }
             }],
             statusCode: 0
         }
@@ -28,7 +28,7 @@ class Createactivity extends Component {
         console.log('[AXIOS REQUEST]')
 
         if (this.state.description !== "" && this.state.title !== "" && this.state.sections.length > 0) {
-            await axios.post('http://localhost:8000/api/assetmanagement/activity', {
+            await axios.post('http://localhost:8000/api/assetmanagment/activity', {
                 id: this.state.id,
                 shortDescription: this.state.description,
                 title: this.state.title,
@@ -120,7 +120,7 @@ class Createactivity extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
                         <div className="input-field col s6">
@@ -138,7 +138,7 @@ class Createactivity extends Component {
                                     <ul key={id} hidden>
                                         <li>
                                             {mappedObject.type = this.state.sectiontype}
-                                            {mappedObject.value = this.state.sectionvalue}
+                                            {mappedObject.data.value = this.state.sectionvalue}
                                         </li>
                                     </ul>
                                 )

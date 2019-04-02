@@ -29,7 +29,7 @@ class Createprogram extends Component {
         console.log('[AXIOS REQUEST]')
 
         if (this.state.description !== "" && this.state.title !== "" && this.state.module.length > 0 && this.state.sections.length > 0) {
-            await axios.post('http://localhost:8000/api/assetmanagement/programs', {
+            await axios.post('http://localhost:8000/api/assetmanagment/programs', {
                 id: this.state.id,
                 description: this.state.description,
                 title: this.state.title,
@@ -143,7 +143,7 @@ class Createprogram extends Component {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input placeholder="Id" id="id" type="id" className="validate" disabled onChange={this.handleidchange}></input>
+                            <input placeholder="Id" id="id" type="id" className="validate" onChange={this.handleidchange}></input>
                             <label className="active" htmlFor="id">ID</label>
                         </div>
                     </div>
