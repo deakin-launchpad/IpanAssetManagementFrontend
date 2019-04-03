@@ -17,7 +17,13 @@ class Activitydetails extends Component {
             module: '',
             sections: [{
                 type: '',
-                value: ''
+                data: {
+                    value: '',
+                    misc: [{
+                        key: '',
+                        value: ''
+                    }]
+                }
             }]
         }
     }
@@ -54,11 +60,7 @@ class Activitydetails extends Component {
             title: this.props.location.params.title,
             sectiontype: this.props.location.params.sections.type,
             sectionvalue: this.props.location.params.sections.value,
-            module: this.props.location.params.module,
-            sections: [{
-                type: this.props.location.params.sections.type,
-                value: this.props.location.params.sections.value
-            }]
+            sections: this.props.location.params,
 
         })
         let collapsible = document.querySelectorAll('.collapsible');
@@ -69,32 +71,31 @@ class Activitydetails extends Component {
     updateActivity = async () => {
         console.log('[AXIOS REQUEST]')
 
-        if (this.state.description !== "" && this.state.title !== "" && this.state.module.length > 0 && this.state.sections.length > 0) {
-            await axios.put('http://localhost:8000/api/assetmanagment/activity', {
-                id: this.state.id,
-                description: this.state.description,
-                title: this.state.title,
-                modules: this.state.module,
-                sections: this.state.sections
+        //if (this.state.description !== "" && this.state.title !== "" && this.state.module.length > 0 && this.state.sections.length > 0) {
+        await axios.put('http://localhost:8000/api/assetmanagment/activity', {
+            id: this.state.id,
+            description: this.state.description,
+            title: this.state.title,
+            sections: this.state.sections
+        })
+            .then(response => {
+
+                if (response.data.statusCode === 200) {
+                    this.setState({
+                        statusCode: 200
+                    })
+                }
+                else
+                    alert(JSON.stringify(response));
+
             })
-                .then(response => {
-
-                    if (response.data.statusCode === 200) {
-                        this.setState({
-                            statusCode: 200
-                        })
-                    }
-                    else
-                        alert(JSON.stringify(response));
-
-                })
-                .catch(err => {
-                    console.log('[ERROR] :' + err)
-                });
-        }
-        else {
-            return (alert('Form fields cannot be empty'))
-        }
+            .catch(err => {
+                console.log('[ERROR] :' + err)
+            });
+        // }
+        // else {
+        //     return (alert('Form fields cannot be empty'))
+        // }
 
     }
 
@@ -125,26 +126,38 @@ class Activitydetails extends Component {
                                         <label className="active" htmlFor="description">Description</label>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="input-field col s6">
-                                        <label className="active" >Sections</label>
-                                        {
-                                            this.props.location.params.sections.map((item, key) => {
+                                <div className="input-field col s6">
+                                    <label className="active" >Sections</label>
+                                    {
+                                        this.props.location.params.sections.map((item, key) => {
+                                            item.data.misc.map((item, key) => {
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="type" id="type" type="text" className="validate" disabled defaultValue={item.type}></input>
-                                                            <label className="active" htmlFor="type">type</label>
+                                                            <input placeholder="key" id="key" type="text" className="validate" disabled defaultValue={item.key}></input>
+                                                            <label className="active" htmlFor="key">key</label>
                                                         </div>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.data.value}></input>
+                                                            <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.value}></input>
                                                             <label className="active" htmlFor="value">value</label>
                                                         </div>
                                                     </div>
                                                 )
                                             })
-                                        }
-                                    </div>
+                                            return (
+                                                <div key={key}>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="type" id="type" type="text" className="validate" disabled defaultValue={item.type}></input>
+                                                        <label className="active" htmlFor="type"></label>
+                                                    </div>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.data.value}></input>
+                                                        <label className="active" htmlFor="value">value</label>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </form>
                         </div >
@@ -171,26 +184,38 @@ class Activitydetails extends Component {
                                         <label className="active" htmlFor="description">Description</label>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="input-field col s6">
-                                        <label className="active" >Sections</label>
-                                        {
-                                            this.props.location.params.sections.map((item, key) => {
+                                <div className="input-field col s6">
+                                    <label className="active" >Sections</label>
+                                    {
+                                        this.props.location.params.sections.map((item, key) => {
+                                            item.data.misc.map((item, key) => {
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type}></input>
-                                                            <label className="active" htmlFor="type">type</label>
+                                                            <input placeholder="key" id="key" type="text" className="validate" defaultValue={item.key}></input>
+                                                            <label className="active" htmlFor="key">key</label>
                                                         </div>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.data.value}></input>
+                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.value}></input>
                                                             <label className="active" htmlFor="value">value</label>
                                                         </div>
                                                     </div>
                                                 )
                                             })
-                                        }
-                                    </div>
+                                            return (
+                                                <div key={key}>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type}></input>
+                                                        <label className="active" htmlFor="type"></label>
+                                                    </div>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.data.value}></input>
+                                                        <label className="active" htmlFor="value">value</label>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </form>
                             <button className="btn waves-effect waves-light " onClick={this.updateActivity} >Update</button>

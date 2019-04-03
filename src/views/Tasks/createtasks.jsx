@@ -21,7 +21,9 @@ class Createtask extends Component {
             description: '',
             title: '',
             type: '',
-            statusCode: 0
+            statusCode: 0,
+            optionsarray: [],
+            popupsarray: []
         }
 
         this.createtask = this.createtask.bind(this)
@@ -35,19 +37,19 @@ class Createtask extends Component {
             questionSet: [{
                 id: this.state.questionid,
                 question: this.state.question,
-                options: this.state.options,
-                popup: this.state.popup,
+                options: this.state.optionsarray,
+                popup: this.state.popupsarray,
                 correct: this.state.correct
             }]
         }
+        console.log('[QUESTION]', this.state.popupsarray)
         if (this.state.description !== "" &&
-            this.state.title !== "" &&
-            this.state.sections.length > 0) {
-            await axios.post('http://localhost:8000/api/assetmanagement/task', {
+            this.state.title !== "") {
+            await axios.post('http://localhost:8000/api/assetmanagment/tasks', {
                 id: this.state.id,
                 shortDescription: this.state.description,
                 title: this.state.title,
-                sections: this.state.sections,
+                type: this.state.type,
                 data: copydata
 
             })
@@ -74,6 +76,8 @@ class Createtask extends Component {
     componentDidUpdate() {
 
         console.log(this.state.id)
+        this.state.optionsarray.push(this.state.options)
+        this.state.popupsarray.push(this.state.popup)
     }
 
     handlesubmit = () => {
@@ -101,11 +105,8 @@ class Createtask extends Component {
         })
     }
     handlepopupchange = (e) => {
-        var array = this.state.popup;
-
-        array.push(e.target.value);
         this.setState({
-            popup: array
+            popup: e.target.value
         })
     }
     handleanswertypechange = (e) => {
@@ -124,16 +125,25 @@ class Createtask extends Component {
         })
     }
     handleoptionschange = (e) => {
-        var array = this.state.options;
-
-        array.push(e.target.value);
+        let options = e.target.value
+        options = options + this.state.options
         this.setState({
-            options: array
+            options: options
         })
     }
     handlecorrectanschange = (e) => {
         this.setState({
             correct: e.target.value
+        })
+    }
+    handletypechange = (e) => {
+        this.setState({
+            type: e.target.value
+        })
+    }
+    handlequestionchange = (e) => {
+        this.setState({
+            question: e.target.value
         })
     }
     addpopup = (e) => {
@@ -157,7 +167,7 @@ class Createtask extends Component {
 
         array.push(<div>
             <div className="input-field col s6">
-                <input placeholder="options" id="options" type="text" className="validate" onChange={this.handleoptionschange} required />
+                <input placeholder="options" id="options" type="text" className="validate" onChange={() => this.handleoptionschange} required />
                 <label className="active" htmlFor="options">options</label>
             </div>
         </div>);
@@ -187,6 +197,10 @@ class Createtask extends Component {
                         <div className="input-field col s6">
                             <input placeholder="description" id="description" type="text" className="validate" onChange={this.handledecriptionchange} required />
                             <label className="active" htmlFor="description">Description</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input placeholder="description" id="description" type="text" className="validate" onChange={this.handletypechange} required />
+                            <label className="active" htmlFor="description">Type</label>
                         </div>
                     </div>
                     <div className="row">
@@ -227,7 +241,7 @@ class Createtask extends Component {
                             <label className="active" htmlFor="question">question</label>
                         </div>
                         <div className="input-field col s6">
-                            <input placeholder="options" id="options" type="text" className="validate" onChange={this.handleoptionchange} required />
+                            <input placeholder="options" id="options" type="text" className="validate" onChange={this.handleoptionschange} required />
                             <label className="active" htmlFor="options">options</label>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addoptions} > <i className="material-icons" >add</i></button>
                             <div className="input-field col s6">

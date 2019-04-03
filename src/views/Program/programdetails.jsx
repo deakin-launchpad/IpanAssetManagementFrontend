@@ -15,11 +15,18 @@ class Programdetails extends Component {
             title: '',
             sectiontype: '',
             sectionvalue: '',
-            module: '',
+            modules: '',
             sections: [{
                 type: '',
-                value: ''
-            }]
+                data: {
+                    value: {},
+                    misc: [{
+                        key: '',
+                        value: {}
+                    }]
+                }
+            }],
+            moodulesMap: []
 
         }
     }
@@ -67,8 +74,9 @@ class Programdetails extends Component {
             id: this.state.id,
             description: this.state.description,
             title: this.state.title,
-            modules: this.state.module,
-            sections: this.state.sections
+            modules: this.state.modules,
+            sections: this.state.sections,
+            modulesMap: this.state.moodulesMap
         })
             .then(response => {
 
@@ -96,17 +104,16 @@ class Programdetails extends Component {
         })
     }
     componentDidMount() {
+        console.log('[MODULE]', this.props.location.params)
         this.setState({
             id: this.props.location.params.id,
             description: this.props.location.params.description,
             title: this.props.location.params.title,
             sectiontype: this.props.location.params.sections.type,
             sectionvalue: this.props.location.params.sections.value,
-            module: this.props.location.params.module,
-            sections: [{
-                type: this.props.location.params.sections.type,
-                value: this.props.location.params.sections.value
-            }]
+            modules: this.props.location.params.modules,
+            sections: this.props.location.params.sections,
+            modulesMap: this.props.location.params.modulesMap
 
         })
         let collapsible = document.querySelectorAll('.collapsible');
@@ -140,15 +147,17 @@ class Programdetails extends Component {
                                         <input placeholder="description" id="description" type="text" className="validate" disabled defaultValue={this.props.location.params.description}></input>
                                         <label className="active" htmlFor="description">Description</label>
                                     </div>
-                                    <div className="input-field col s6">
-                                        <label className="active" >Sections</label>
-                                        {
-                                            this.props.location.params.sections.map((item, key) => {
+                                </div>
+                                <div className="input-field col s6">
+                                    <label className="active" >Sections</label>
+                                    {
+                                        this.props.location.params.sections.map((item, key) => {
+                                            item.data.misc.map((item, key) => {
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="type" id="type" type="text" className="validate" disabled defaultValue={item.type}></input>
-                                                            <label className="active" htmlFor="type">type</label>
+                                                            <input placeholder="key" id="key" type="text" className="validate" disabled defaultValue={item.key}></input>
+                                                            <label className="active" htmlFor="key">key</label>
                                                         </div>
                                                         <div className="input-field col s6">
                                                             <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.value}></input>
@@ -157,8 +166,20 @@ class Programdetails extends Component {
                                                     </div>
                                                 )
                                             })
-                                        }
-                                    </div>
+                                            return (
+                                                <div key={key}>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="type" id="type" type="text" className="validate" disabled defaultValue={item.type}></input>
+                                                        <label className="active" htmlFor="type"></label>
+                                                    </div>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.data.value}></input>
+                                                        <label className="active" htmlFor="value">value</label>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s6">
@@ -169,6 +190,34 @@ class Programdetails extends Component {
                                                     <div key={key}>
                                                         <div className="input-field col s6">
                                                             <input placeholder="modules" id="modules" type="text" className="validate" disabled defaultValue={item}></input>
+                                                            <label className="active" htmlFor="modules"></label>
+                                                        </div>
+                                                    </div>
+                                                );
+
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s6">
+                                        <label className="active">Modules Map</label>
+                                        {
+                                            this.props.location.params.modulesMap.map((item, key) => {
+                                                item.value.map((item, key) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="modules" id="modules" type="text" className="validate" disabled defaultValue={item}></input>
+                                                                <label className="active" htmlFor="modules"></label>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                                return (
+                                                    <div key={key}>
+                                                        <div className="input-field col s6">
+                                                            <input placeholder="modules" id="modules" type="text" className="validate" disabled defaultValue={item.key}></input>
                                                             <label className="active" htmlFor="modules"></label>
                                                         </div>
                                                     </div>
@@ -203,25 +252,39 @@ class Programdetails extends Component {
                                         <input placeholder="description" id="description" type="text" className="validate" defaultValue={this.props.location.params.description} onChange={this.handledecriptionchange}></input>
                                         <label className="active" htmlFor="description">Description</label>
                                     </div>
-                                    <div className="input-field col s6">
-                                        <label className="active" >Sections</label>
-                                        {
-                                            this.props.location.params.sections.map((item, key) => {
+                                </div>
+                                <div className="input-field col s6">
+                                    <label className="active" >Sections</label>
+                                    {
+                                        this.props.location.params.sections.map((item, key) => {
+                                            item.data.misc.map((item, key) => {
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type} onChange={this.handlesectiontypechange}></input>
-                                                            <label className="active" htmlFor="type">type</label>
+                                                            <input placeholder="key" id="key" type="text" className="validate" defaultValue={item.key}></input>
+                                                            <label className="active" htmlFor="key">key</label>
                                                         </div>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.value} onChange={this.handlesectionvaluechange}></input>
+                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.value}></input>
                                                             <label className="active" htmlFor="value">value</label>
                                                         </div>
                                                     </div>
                                                 )
                                             })
-                                        }
-                                    </div>
+                                            return (
+                                                <div key={key}>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type}></input>
+                                                        <label className="active" htmlFor="type"></label>
+                                                    </div>
+                                                    <div className="input-field col s6">
+                                                        <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.data.value}></input>
+                                                        <label className="active" htmlFor="value">value</label>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s6">
@@ -232,6 +295,34 @@ class Programdetails extends Component {
                                                     <div key={key}>
                                                         <div className="input-field col s6">
                                                             <input placeholder="modules" id="modules" type="text" className="validate" defaultValue={item} onChange={this.handlemodulechange}></input>
+                                                            <label className="active" htmlFor="modules"></label>
+                                                        </div>
+                                                    </div>
+                                                );
+
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s6">
+                                        <label className="active">Modules Map</label>
+                                        {
+                                            this.props.location.params.modulesMap.map((item, key) => {
+                                                item.value.map((item, key) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="modules" id="modules" type="text" className="validate" defaultValue={item}></input>
+                                                                <label className="active" htmlFor="modules"></label>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                                return (
+                                                    <div key={key}>
+                                                        <div className="input-field col s6">
+                                                            <input placeholder="modules" id="modules" type="text" className="validate" defaultValue={item.key}></input>
                                                             <label className="active" htmlFor="modules"></label>
                                                         </div>
                                                     </div>

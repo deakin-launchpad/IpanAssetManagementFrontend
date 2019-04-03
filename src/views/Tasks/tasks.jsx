@@ -15,7 +15,6 @@ class Tasks extends Component {
         await axios.get('http://localhost:8000/api/assetmanagment/tasks')
             .then((response) => {
                 let data = [];
-                console.log('[Response]', response)
                 response.data.data.tasks.forEach(element => {
                     data.push(element);
                 });
@@ -34,7 +33,6 @@ class Tasks extends Component {
 
 
     render() {
-        console.log('Tasks', this.state.listoftasks)
         if ((this.state.listoftasks).length > 0) {
             return (
                 <div className="container">

@@ -9,6 +9,9 @@ class Createprogram extends Component {
 
         this.state = {
             addmodule: [],
+            coverPhoto: '',
+            key: '',
+            miscvalue: '',
             addsections: [],
             id: '',
             description: '',
@@ -18,8 +21,15 @@ class Createprogram extends Component {
             module: [],
             sections: [{
                 type: '',
-                value: ''
+                data: {
+                    value: '',
+                    misc: [{
+                        key: '',
+                        value: ''
+                    }]
+                }
             }],
+            moodulesMap: [],
             statusCode: 0
         }
 
@@ -33,14 +43,15 @@ class Createprogram extends Component {
                 id: this.state.id,
                 description: this.state.description,
                 title: this.state.title,
+                coverPhoto: this.state.coverPhoto,
                 modules: this.state.module,
                 sections: this.state.sections
             })
                 .then(response => {
 
-                    if (response.data.statusCode === 201) {
+                    if (response.data.statusCode === 200) {
                         this.setState({
-                            statusCode: 201
+                            statusCode: 200
                         })
                     }
                     else
@@ -77,11 +88,22 @@ class Createprogram extends Component {
         array.push(<div>
             <div className="input-field col s6">
                 <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
-                <label className="active" htmlFor="type"></label>
+                <label className="active" htmlFor="type">type</label>
             </div>
             <div className="input-field col s6">
                 <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
                 <label className="active" htmlFor="value">value</label>
+            </div>
+            <div className="input-field col s6">
+                <label className="active" htmlFor="value">Misc</label>
+                <div className="input-field col s6">
+                    <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                    <label className="active" htmlFor="key">key</label>
+                </div>
+                <div className="input-field col s6">
+                    <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                    <label className="active" htmlFor="miscvalue">misc value</label>
+                </div>
             </div>
         </div>);
         console.log('[ARRAY] :', array)
@@ -103,7 +125,22 @@ class Createprogram extends Component {
             id: e.target.value
         })
     }
+    handlecoverPhotochnage = (e) => {
+        this.setState({
+            coverPhoto: e.target.value
+        })
+    }
+    handlekeychange = (e) => {
+        this.setState({
+            key: e.target.value
+        })
+    }
 
+    handlemiscvaluechange = (e) => {
+        this.setState({
+            miscvalue: e.target.value
+        })
+    }
     handledecriptionchange = (e) => {
         this.setState({
             description: e.target.value
@@ -135,7 +172,7 @@ class Createprogram extends Component {
     }
 
     render() {
-        if (this.state.statusCode === 201) {
+        if (this.state.statusCode === 200) {
             return <Redirect to='/programs' />
         }
         return (
@@ -156,6 +193,10 @@ class Createprogram extends Component {
                             <input placeholder="description" id="description" type="text" className="validate" onChange={this.handledecriptionchange} required />
                             <label className="active" htmlFor="description">Description</label>
                         </div>
+                        <div className="input-field col s6">
+                            <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlecoverPhotochnage} required />
+                            <label className="active" htmlFor="value">Cover Photo</label>
+                        </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
@@ -165,7 +206,16 @@ class Createprogram extends Component {
                                     <ul key={id} hidden>
                                         <li>
                                             {mappedObject.type = this.state.sectiontype}
-                                            {mappedObject.value = this.state.sectionvalue}
+                                            {mappedObject.data.value = this.state.sectionvalue}
+                                            {mappedObject.data.misc.map((element, id) =>
+                                                <ul key={id} hidden>
+                                                    <li>
+                                                        {console.log('[PROGRAM]', element.key)}
+                                                        {element.key = this.state.key}
+                                                        {element.value = this.state.miscvalue}
+                                                    </li>
+                                                </ul>
+                                            )}
                                         </li>
                                     </ul>
                                 )
@@ -180,8 +230,19 @@ class Createprogram extends Component {
                         <div className="input-field col s6">
                             <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
                             <label className="active" htmlFor="value">value</label>
-                            <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                         </div>
+                        <div className="input-field col s6">
+                            <label className="active" htmlFor="value">Misc</label>
+                            <div className="input-field col s6">
+                                <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                                <label className="active" htmlFor="key">key</label>
+                            </div>
+                            <div className="input-field col s6">
+                                <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                                <label className="active" htmlFor="miscvalue">misc value</label>
+                            </div>
+                        </div>
+                        <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                     </div>
                     <div className="row">
                         <div className="input-field col s6">

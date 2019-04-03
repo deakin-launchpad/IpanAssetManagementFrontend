@@ -10,6 +10,8 @@ class Createactivity extends Component {
         this.state = {
             addsections: [],
             id: '',
+            key: '',
+            miscvalue: '',
             description: '',
             title: '',
             sectiontype: '',
@@ -17,7 +19,13 @@ class Createactivity extends Component {
 
             sections: [{
                 type: '',
-                data: { value: '' }
+                data: {
+                    value: '',
+                    misc: [{
+                        key: '',
+                        value: ''
+                    }]
+                }
             }],
             statusCode: 0
         }
@@ -36,9 +44,9 @@ class Createactivity extends Component {
             })
                 .then(response => {
 
-                    if (response.data.statusCode === 201) {
+                    if (response.data.statusCode === 200) {
                         this.setState({
-                            statusCode: 201
+                            statusCode: 200
                         })
                     }
                     else
@@ -62,11 +70,22 @@ class Createactivity extends Component {
         array.push(<div>
             <div className="input-field col s6">
                 <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
-                <label className="active" htmlFor="type"></label>
+                <label className="active" htmlFor="type">type</label>
             </div>
             <div className="input-field col s6">
                 <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
                 <label className="active" htmlFor="value">value</label>
+            </div>
+            <div className="input-field col s6">
+                <label className="active" htmlFor="value">Misc</label>
+                <div className="input-field col s6">
+                    <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                    <label className="active" htmlFor="key">key</label>
+                </div>
+                <div className="input-field col s6">
+                    <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                    <label className="active" htmlFor="miscvalue">misc value</label>
+                </div>
             </div>
         </div>);
         console.log('[ARRAY] :', array)
@@ -88,7 +107,17 @@ class Createactivity extends Component {
             id: e.target.value
         })
     }
+    handlekeychange = (e) => {
+        this.setState({
+            key: e.target.value
+        })
+    }
 
+    handlemiscvaluechange = (e) => {
+        this.setState({
+            miscvalue: e.target.value
+        })
+    }
     handledecriptionchange = (e) => {
         this.setState({
             description: e.target.value
@@ -112,7 +141,7 @@ class Createactivity extends Component {
     }
 
     render() {
-        if (this.state.statusCode === 201) {
+        if (this.state.statusCode === 200) {
             return <Redirect to='/programs' />
         }
         return (
@@ -131,26 +160,49 @@ class Createactivity extends Component {
                             <input placeholder="description" id="description" type="text" className="validate" onChange={this.handledecriptionchange} required />
                             <label className="active" htmlFor="description">Description</label>
                         </div>
-                        <div className="input-field col s6">
-                            <label className="active" >Sections</label>
-                            {
-                                this.state.sections.map((mappedObject, id) =>
-                                    <ul key={id} hidden>
-                                        <li>
-                                            {mappedObject.type = this.state.sectiontype}
-                                            {mappedObject.data.value = this.state.sectionvalue}
-                                        </li>
-                                    </ul>
-                                )
-                            }
+                        <div className="row">
+                            <div className="input-field col s6">
+                                <label className="active" >Sections</label>
+                                {
+                                    this.state.sections.map((mappedObject, id) =>
+                                        <ul key={id} hidden>
+                                            <li>
+                                                {mappedObject.type = this.state.sectiontype}
+                                                {mappedObject.data.value = this.state.sectionvalue}
+                                                {mappedObject.data.misc.map((mappedObject, id) =>
+                                                    <ul key={id} hidden>
+                                                        <li>
+                                                            {mappedObject.key = this.state.key}
+                                                            {mappedObject.value = this.state.miscvalue}
+                                                        </li>
+                                                    </ul>
+                                                )}
+                                            </li>
+                                        </ul>
+                                    )
+                                }
+                            </div>
                         </div>
-                        <div className="input-field col s6">
-                            <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
-                            <label className="active" htmlFor="type">type</label>
-                        </div>
-                        <div className="input-field col s6">
-                            <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
-                            <label className="active" htmlFor="value">value</label>
+                        <div className="row">
+                            <div className="input-field col s6">
+                                <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
+                                <label className="active" htmlFor="type">type</label>
+                            </div>
+                            <div className="input-field col s6">
+                                <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
+                                <label className="active" htmlFor="value">value</label>
+                            </div>
+                            <div className="input-field col s6">
+                                <label className="active" htmlFor="value">Misc</label>
+                                <div className="input-field col s6">
+                                    <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                                    <label className="active" htmlFor="key">key</label>
+                                </div>
+                                <div className="input-field col s6">
+                                    <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                                    <label className="active" htmlFor="miscvalue">misc value</label>
+                                </div>
+                            </div>
                             <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                         </div>
                         <div>

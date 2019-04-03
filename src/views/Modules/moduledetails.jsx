@@ -19,7 +19,13 @@ class Moduledetails extends Component {
             module: [],
             sections: [{
                 type: '',
-                value: ''
+                data: {
+                    value: '',
+                    misc: [{
+                        key: '',
+                        value: ''
+                    }]
+                }
             }],
             tasks: [],
             activities: [],
@@ -178,10 +184,7 @@ class Moduledetails extends Component {
             sectionvalue: this.props.location.params.sections.value,
             module: this.props.location.params.module,
             refreshers: this.props.location.params.refreshers,
-            sections: [{
-                type: this.props.location.params.sections.type,
-                value: this.props.location.params.sections.value
-            }],
+            sections: this.props.location.params,
             tasks: this.props.location.params.tasks,
             activities: this.props.location.params.activities,
             goals: this.props.location.params.goals
@@ -219,6 +222,20 @@ class Moduledetails extends Component {
                                         <label className="active" >Sections</label>
                                         {
                                             this.props.location.params.sections.map((item, key) => {
+                                                item.data.misc.map((item, key) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="key" id="key" type="text" className="validate" disabled defaultValue={item.key}></input>
+                                                                <label className="active" htmlFor="key">key</label>
+                                                            </div>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.value}></input>
+                                                                <label className="active" htmlFor="value">value</label>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
@@ -226,7 +243,7 @@ class Moduledetails extends Component {
                                                             <label className="active" htmlFor="type"></label>
                                                         </div>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.value}></input>
+                                                            <input placeholder="value" id="type" type="text" className="validate" disabled defaultValue={item.data.value}></input>
                                                             <label className="active" htmlFor="value">value</label>
                                                         </div>
                                                     </div>
@@ -388,14 +405,28 @@ class Moduledetails extends Component {
                                         <label className="active" >Sections</label>
                                         {
                                             this.props.location.params.sections.map((item, key) => {
+                                                item.data.misc.map((item, key) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="key" id="key" type="text" className="validate" defaultValue={item.key}></input>
+                                                                <label className="active" htmlFor="key">key</label>
+                                                            </div>
+                                                            <div className="input-field col s6">
+                                                                <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.value}></input>
+                                                                <label className="active" htmlFor="value">value</label>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
                                                 return (
                                                     <div key={key}>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type} onChange={this.handlesectiontypechange}></input>
+                                                            <input placeholder="type" id="type" type="text" className="validate" defaultValue={item.type}></input>
                                                             <label className="active" htmlFor="type"></label>
                                                         </div>
                                                         <div className="input-field col s6">
-                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.value} onChange={this.handlesectionvaluechange}></input>
+                                                            <input placeholder="value" id="type" type="text" className="validate" defaultValue={item.data.value}></input>
                                                             <label className="active" htmlFor="value">value</label>
                                                         </div>
                                                     </div>

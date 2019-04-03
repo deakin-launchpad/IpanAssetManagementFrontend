@@ -11,6 +11,8 @@ class Createmodule extends Component {
             addrefreshers: [],
             addsections: [],
             addtasks: [],
+            key: '',
+            miscvalue: '',
             addgoals: [],
             addpills: [],
             addactivies: [],
@@ -22,7 +24,13 @@ class Createmodule extends Component {
             refreshers: [],
             sections: [{
                 type: '',
-                value: ''
+                data: {
+                    value: '',
+                    misc: [{
+                        key: '',
+                        value: ''
+                    }]
+                }
             }],
             tasks: [],
             activities: [],
@@ -48,7 +56,7 @@ class Createmodule extends Component {
             this.state.goals.length > 0 &&
             this.state.activities.length > 0 &&
             this.state.pills.length > 0) {
-            await axios.post('http://localhost:8000/api/assetmanagement/modules', {
+            await axios.post('http://localhost:8000/api/assetmanagment/modules', {
                 id: this.state.id,
                 shortDescription: this.state.description,
                 title: this.state.title,
@@ -160,6 +168,17 @@ class Createmodule extends Component {
                 <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
                 <label className="active" htmlFor="value">value</label>
             </div>
+            <div className="input-field col s6">
+                <label className="active" htmlFor="value">Misc</label>
+                <div className="input-field col s6">
+                    <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                    <label className="active" htmlFor="key">key</label>
+                </div>
+                <div className="input-field col s6">
+                    <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                    <label className="active" htmlFor="miscvalue">misc value</label>
+                </div>
+            </div>
         </div>);
         console.log('[ARRAY] :', array)
         this.setState({
@@ -180,7 +199,17 @@ class Createmodule extends Component {
             id: e.target.value
         })
     }
+    handlekeychange = (e) => {
+        this.setState({
+            key: e.target.value
+        })
+    }
 
+    handlemiscvaluechange = (e) => {
+        this.setState({
+            miscvalue: e.target.value
+        })
+    }
     handledecriptionchange = (e) => {
         this.setState({
             description: e.target.value
@@ -277,12 +306,22 @@ class Createmodule extends Component {
                                     <ul key={id} hidden>
                                         <li>
                                             {mappedObject.type = this.state.sectiontype}
-                                            {mappedObject.value = this.state.sectionvalue}
+                                            {mappedObject.data.value = this.state.sectionvalue}
+                                            {mappedObject.data.misc.map((mappedObject, id) =>
+                                                <ul key={id} hidden>
+                                                    <li>
+                                                        {mappedObject.key = this.state.key}
+                                                        {mappedObject.value = this.state.miscvalue}
+                                                    </li>
+                                                </ul>
+                                            )}
                                         </li>
                                     </ul>
                                 )
                             }
                         </div>
+                    </div>
+                    <div className="row">
                         <div className="input-field col s6">
                             <input placeholder="type" id="type" type="text" className="validate" onChange={this.handlesectiontypechange} required />
                             <label className="active" htmlFor="type">type</label>
@@ -290,20 +329,31 @@ class Createmodule extends Component {
                         <div className="input-field col s6">
                             <input placeholder="value" id="value" type="text" className="validate" onChange={this.handlesectionvaluechange} required />
                             <label className="active" htmlFor="value">value</label>
-                            <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
                         </div>
                         <div className="input-field col s6">
-                            {
-                                this.state.addsections.map((input, id) => {
-
-                                    return (
-                                        <div key={id}>
-                                            {input}
-                                        </div>
-                                    )
-                                })
-                            }
+                            <label className="active" htmlFor="value">Misc</label>
+                            <div className="input-field col s6">
+                                <input placeholder="key" id="key" type="text" className="validate" onChange={this.handlekeychange} required />
+                                <label className="active" htmlFor="key">key</label>
+                            </div>
+                            <div className="input-field col s6">
+                                <input placeholder="miscvalue" id="miscvalue" type="text" className="validate" onChange={this.handlemiscvaluechange} required />
+                                <label className="active" htmlFor="miscvalue">misc value</label>
+                            </div>
                         </div>
+                        <button className="btn-floating btn-large waves-effect waves-light red" onClick={this.addsections} > <i className="material-icons" >add</i></button>
+                    </div>
+                    <div className="input-field col s6">
+                        {
+                            this.state.addsections.map((input, id) => {
+
+                                return (
+                                    <div key={id}>
+                                        {input}
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
